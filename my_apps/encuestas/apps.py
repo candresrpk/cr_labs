@@ -4,3 +4,7 @@ from django.apps import AppConfig
 class EncuestasConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'my_apps.encuestas'
+
+
+    def ready(self):
+        import my_apps.encuestas.signals
