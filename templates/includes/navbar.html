@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg bg-light shadow-sm px-4 py-3 rounded-3">
+  <div class="container-fluid">
+
+    <a class="navbar-brand fw-bold text-success" href="#">
+      Hossaik
+    </a>
+
+    <!-- Botón responsive -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- Links de la izquierda -->
+      <ul class="navbar-nav me-auto">
+
+        <li class="nav-item">
+          <a class="nav-link text-success fw-semibold" href="#">Inicio</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-success fw-semibold" href="#">Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-success fw-semibold" href="#">Proyectos</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-success fw-semibold" href="#">Contacto</a>
+        </li>
+
+      </ul>
+
+
+      <!-- Controles de sesión -->
+      <ul class="navbar-nav">
+
+        {% if user.is_authenticated %}
+
+          <!-- LOGOUT -->
+          <li class="nav-item ms-2">
+            <a class="btn btn-danger btn-sm" href="#">
+              Cerrar sesión
+            </a>
+          </li>
+
+        {% else %}
+
+          <!-- LOGIN -->
+          <li class="nav-item ms-2">
+            <a class="btn btn-outline-success btn-sm" href="#">
+              Iniciar sesión
+            </a>
+          </li>
+
+          <!-- REGISTER -->
+          <li class="nav-item ms-2">
+            <a class="btn btn-success btn-sm" href="#">
+              Registrarse
+            </a>
+          </li>
+
+        {% endif %}
+      </ul>
+
+    </div>
+  </div>
+</nav>

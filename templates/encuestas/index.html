@@ -1,0 +1,162 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock  %}
+
+{% block content %}
+
+<!-- ========================== HERO SOBRE HOSSAIK =============================== -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+
+        <div class="row align-items-center">
+
+            <!-- Imagen del logo -->
+            <div class="col-md-5 text-center mb-4 mb-md-0">
+                <img src="{% static 'img/hossaik.png' %}"
+                     class="img-fluid rounded-circle shadow"
+                     alt="Logo de Hossaik"
+                     style="max-width: 260px; border: 6px solid #198754;">
+            </div>
+
+            <!-- TEXTO -->
+            <div class="col-md-7">
+                <h1 class="fw-bold text-success display-5">Hola, soy Hossaik</h1>
+
+                <p class="lead mt-3">
+                    Desarrollador apasionado que busca crecer construyendo herramientas
+                    que conectan datos, tecnología y propósito.
+                    Mi misión es crear soluciones que ayuden a las personas a interpretar
+                    su información y tomar mejores decisiones cada día.
+                </p>
+
+                <p class="fs-5 mt-3">
+                    <em>
+                        “La tecnología no es solo código: es la capacidad de transformar
+                        una idea en algo que mejore la vida de los demás.”
+                    </em>
+                </p>
+
+                <a href="#" class="btn btn-success btn-lg mt-3">
+                    Conoce mis proyectos
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section
+
+
+<!-- ====================== APP DE ENCUESTAS ====================== -->
+<section class="container py-5">
+    <div class="bg-white shadow-sm p-5 rounded-3">
+
+        <h2 class="text-center text-success fw-bold mb-4">Encuestas Inteligentes</h2>
+
+        <p class="fs-5 text-center">
+            Nuestra plataforma está diseñada para ayudarte a recolectar información
+            de forma estructurada, rápida y eficiente.  
+            Analiza los resultados en tiempo real y toma decisiones basadas en datos reales.
+        </p>
+
+        <p class="fs-5 text-center mt-3">
+            Si buscas claridad, precisión y una experiencia moderna,
+            esta aplicación es tu mejor opción.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- ====================== PROYECTOS RECIENTES ====================== -->
+<section class="container py-5">
+    <h2 class="text-center text-success fw-bold mb-4">Proyectos Recientes</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Sistema de Encuestas Inteligentes</h5>
+                    <p class="card-text">
+                        Plataforma completa con análisis de datos, cuotas dinámicas y roles avanzados.
+                    </p>
+                    <a href="#" class="btn btn-outline-success">Ver más</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success">CRM con IA y WebSockets</h5>
+                    <p class="card-text">
+                        Un CRM moderno con chat inteligente para análisis de clientes.
+                    </p>
+                    <a href="#" class="btn btn-outline-success">Ver más</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success">LinguaTrainer AI</h5>
+                    <p class="card-text">
+                        Entrenador de idiomas con retroalimentación por voz y texto.
+                    </p>
+                    <a href="#" class="btn btn-outline-success">Ver más</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ====================== BLOG RECIENTE ====================== -->
+<section class="container py-5">
+    <h2 class="text-center text-success fw-bold mb-4">Últimas Preguntas del Blog</h2>
+
+    <ul class="list-group shadow-sm">
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            ¿Cómo crear un sistema de encuestas con IA?
+            <a href="#" class="btn btn-sm btn-success">Leer</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            ¿Qué es el análisis predictivo y cómo aplicarlo?
+            <a href="#" class="btn btn-sm btn-success">Leer</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Cómo usar Django para construir dashboards de datos
+            <a href="#" class="btn btn-sm btn-success">Leer</a>
+        </li>
+
+    </ul>
+</section>
+
+
+<!-- ====================== SECCIÓN FINAL CREATIVA ====================== -->
+<section class="py-5 bg-light text-center mt-5">
+    <div class="container">
+
+        <h2 class="fw-bold text-success">El futuro se construye, no se espera</h2>
+
+        <p class="lead mt-3">
+            Si deseas construir tu propio sistema, aprender desarrollo,  
+            o simplemente explorar lo que la tecnología puede hacer por ti,  
+            este es un buen lugar para empezar.
+        </p>
+
+        <a href="#" class="btn btn-success btn-lg mt-3">
+            Explorar más
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

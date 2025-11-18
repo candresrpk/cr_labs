@@ -62,7 +62,6 @@ class Encuesta(models.Model):
 class PermisosEncuesta(models.Model):
     encuesta = models.ForeignKey(Encuesta, related_name='permisos', on_delete=models.CASCADE)
     usuario = models.ForeignKey(Profile, related_name='permisos_encuestas', on_delete=models.CASCADE)
-    puede_editar = models.BooleanField(default=False)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
