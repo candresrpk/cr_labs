@@ -1,0 +1,85 @@
+{% extends '../base.html' %}
+
+{% block title %} Registro {% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; background-color: #f9fafb;">
+
+    <div class="col-md-5">
+        <div class="card p-4 shadow-sm rounded-4">
+
+            <!-- Título -->
+            <div class="text-center mb-3">
+                <h2 class="fw-bold" style="color: #1d4e89;">Crear Cuenta</h2>
+            </div>
+
+            <!-- FORM -->
+            <form method="post" action="{% url 'accounts:register' %}">
+                {% csrf_token %}
+
+                <!-- USERNAME -->
+                <div class="mb-3">
+                    <label for="id_username" class="form-label fw-semibold">Nombre de usuario</label>
+                    <input type="text"
+                           name="username"
+                           id="id_username"
+                           class="form-control form-control-lg"
+                           placeholder="Escribe tu nombre de usuario"
+                           required>
+                </div>
+
+                <!-- PASSWORD 1 -->
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label fw-semibold">Contraseña</label>
+                    <input type="password"
+                           name="password1"
+                           id="id_password1"
+                           class="form-control form-control-lg"
+                           placeholder="Ingresa tu contraseña"
+                           required>
+                </div>
+
+                <!-- PASSWORD 2 -->
+                <div class="mb-3">
+                    <label for="id_password2" class="form-label fw-semibold">Confirmar contraseña</label>
+                    <input type="password"
+                           name="password2"
+                           id="id_password2"
+                           class="form-control form-control-lg"
+                           placeholder="Repite la contraseña"
+                           required>
+                </div>
+
+                <!-- ERRORES (si los hay) -->
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+                {% endif %}
+
+                <!-- BOTÓN -->
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-lg text-white fw-semibold"
+                            style="background-color: #1d4e89;">
+                        Crear Cuenta
+                    </button>
+                </div>
+            </form>
+
+            <!-- LOGIN -->
+            <div class="text-center mt-4">
+                <p class="small">
+                    ¿Ya tienes una cuenta?
+                    <a href="{% url 'accounts:login' %}" class="fw-semibold" style="color: #1d4e89;">
+                        Inicia sesión aquí
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

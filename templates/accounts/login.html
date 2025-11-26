@@ -1,0 +1,93 @@
+{% extends '../base.html' %}
+
+{% block title %} Iniciar Sesión {% endblock %}
+
+{% block content %}
+
+<style>
+    .login-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f9fafb;
+    }
+
+    .login-card {
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+    }
+
+    .login-title {
+        color: #1d4e89;
+        font-weight: 700;
+    }
+
+    .btn-login {
+        background-color: #1d4e89;
+        border-color: #1d4e89;
+    }
+
+    .btn-login:hover {
+        background-color: #163b66;
+        border-color: #163b66;
+    }
+
+    .form-control:focus {
+        border-color: #1d4e89;
+        box-shadow: 0 0 0 0.2rem rgba(29, 78, 137, 0.25);
+    }
+</style>
+
+
+<div class="login-wrapper">
+
+    <div class="col-md-5">
+        <div class="card login-card p-4">
+
+            <!-- Título -->
+            <div class="text-center mb-3">
+                <h2 class="login-title">Iniciar Sesión</h2>
+            </div>
+
+            <!-- FORM -->
+            <form method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+
+                <!-- Username -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Nombre de usuario</label>
+                    <input type="text" name="username" class="form-control form-control-lg" placeholder="Ingresa tu usuario" required>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Contraseña</label>
+                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresa tu contraseña" required>
+                </div>
+
+                <!-- Botón -->
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-login btn-lg text-white fw-semibold">
+                        Iniciar Sesión
+                    </button>
+                </div>
+            </form>
+
+            <!-- REGISTRO -->
+            <div class="text-center mt-4">
+                <p class="small">
+                    ¿No tienes una cuenta?
+                    <a href="{% url 'accounts:register' %}" class="fw-semibold" style="color: #1d4e89;">
+                        Regístrate aquí
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,42 +1,144 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>Title</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+{% load static %}
 
-        <!-- Bootstrap CSS v5.2.1 -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        />
-    </head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
 
-    <body>
-        <header>
-            <!-- place navbar here -->
-        </header>
-        <main></main>
-        <footer>
-            <!-- place footer here -->
-        </footer>
-        <!-- Bootstrap JavaScript Libraries -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
-    </body>
+    <title>{% block title %} Dashboard — C&R Labs {% endblock %}</title>
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"
+    />
+
+
+
+    <!-- Icons Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #1d4e89; /* Tu azul */
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 25px 15px;
+        }
+
+        .sidebar .nav-link {
+            color: #e8e8e8;
+            font-weight: 500;
+            margin: 5px 0;
+            border-radius: 6px;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        /* Navbar superior interno */
+        .top-nav {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- ============== SIDEBAR ============== -->
+    <div class="sidebar">
+
+        <h4 class="fw-bold mb-4">C&R Labs</h4>
+
+        <nav class="nav flex-column">
+
+            <a href="#" class="nav-link {% block active_dashboard %}{% endblock %}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+
+            <a href="#" class="nav-link {% block active_encuestas %}{% endblock %}">
+                <i class="bi bi-code-slash"></i> Encuestas
+            </a>
+
+            <a href="#" class="nav-link {% block active_usuarios %}{% endblock %}">
+                <i class="bi bi-people"></i> Usuarios
+            </a>
+
+            <a href="#" class="nav-link mt-4 text-danger">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+            </a>
+
+        </nav>
+    </div>
+
+
+    <!-- ============== CONTENIDO ============== -->
+    <div class="main-content">
+
+        <!-- NAV SUPERIOR -->
+        <div class="top-nav mb-4 d-flex justify-content-between align-items-center">
+            <h4 class="m-0 fw-bold text-dark">
+                {% block page_title %}Panel{% endblock %}
+            </h4>
+
+            <span class="text-muted small">Usuario: {{ request.user.username }}</span>
+        </div>
+
+        <!-- CONTENIDO INTERNO -->
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"
+    ></script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"
+    ></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
 </html>

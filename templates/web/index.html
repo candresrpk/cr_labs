@@ -1,0 +1,173 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<!-- ========================== HERO C&R LABS =============================== -->
+<section class="py-5" style="background-color: #0d1b2a;">
+    <div class="container py-5">
+
+        <div class="row align-items-center">
+
+            <!-- LOGO -->
+            <div class="col-md-5 text-center mb-4 mb-md-0">
+                <img src="{% static 'img/crlabs.png' %}"
+                     class="img-fluid rounded-circle shadow"
+                     alt="Logo de C&R Labs"
+                     style="max-width: 260px; border: 6px solid #0d1b2a;">
+            </div>
+
+            <!-- TEXTO -->
+            <div class="col-md-7 text-light">
+                <h1 class="fw-bold display-5" style="color: #e0e1dd;">Somos C&R Labs</h1>
+
+                <p class="lead mt-3" style="color: #f2e9e4;">
+                    Un laboratorio de desarrollo donde unimos ingeniería, datos e innovación
+                    para crear herramientas que resuelven problemas reales.
+                </p>
+
+                <p class="fs-5 mt-3" style="color: #e0e1dd;">
+                    <em>
+                        “Cada línea de código es una oportunidad para construir el futuro.”
+                    </em>
+                </p>
+
+                <a href="#" class="btn btn-lg mt-3"
+                   style="background-color: #1d4e89; color: white; border-radius: 10px;">
+                    Conoce nuestros proyectos
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ====================== APP DE ENCUESTAS ====================== -->
+<section class="container py-5">
+    <div class="shadow-sm p-5 rounded-3"
+         style="background-color: white;">
+
+        <h2 class="text-center fw-bold mb-4" style="color: #1b263b;">Encuestas Inteligentes</h2>
+
+        <p class="fs-5 text-center">
+            Plataforma diseñada para recolectar y analizar información
+            con precisión, velocidad y claridad.
+        </p>
+
+        <p class="fs-5 text-center mt-3">
+            Control de cuotas, reportes y análisis en tiempo real.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- ====================== PROYECTOS RECIENTES ====================== -->
+<section class="container py-5">
+    <h2 class="text-center fw-bold mb-4" style="color: #1b263b;">Proyectos Recientes</h2>
+
+    <div class="row g-4">
+
+        <!-- TARJETA -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100" style="border-radius: 16px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #1d4e89;">Sistema de Encuestas Inteligentes</h5>
+                    <p class="card-text">
+                        Plataforma con IA, reportes en tiempo real y manejo avanzado de cuotas.
+                    </p>
+                    <a href="{% url "encuestas:list" %}" class="btn"
+                       style="border: 1px solid #1d4e89; color: #1d4e89; border-radius: 10px;">
+                        Ver más
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETA -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100" style="border-radius: 16px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #1d4e89;">CRM con IA y WebSockets</h5>
+                    <p class="card-text">
+                        CRM inteligente con chat potenciado por IA, KPIs y búsqueda semántica.
+                    </p>
+                    <a href="#" class="btn"
+                       style="border: 1px solid #1d4e89; color: #1d4e89; border-radius: 10px;">
+                        Ver más
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETA -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100" style="border-radius: 16px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #1d4e89;">LinguaTrainer AI</h5>
+                    <p class="card-text">
+                        Entrenador de idiomas con asistencia por voz y retroalimentación inteligente.
+                    </p>
+                    <a href="#" class="btn"
+                       style="border: 1px solid #1d4e89; color: #1d4e89; border-radius: 10px;">
+                        Ver más
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ====================== BLOG RECIENTE ====================== -->
+<section class="container py-5">
+    <h2 class="text-center fw-bold mb-4" style="color: #1b263b;">Últimas Preguntas del Blog</h2>
+
+    <ul class="list-group shadow-sm">
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            ¿Cómo construir un sistema de encuestas con IA?
+            <a href="#" class="btn btn-sm"
+               style="background-color: #1d4e89; color: white; border-radius: 8px;">Leer</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            ¿Qué es el análisis predictivo y cómo usarlo?
+            <a href="#" class="btn btn-sm"
+               style="background-color: #1d4e89; color: white; border-radius: 8px;">Leer</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Guía para crear dashboards de datos con Django
+            <a href="#" class="btn btn-sm"
+               style="background-color: #1d4e89; color: white; border-radius: 8px;">Leer</a>
+        </li>
+
+    </ul>
+</section>
+
+<!-- ====================== SECCIÓN FINAL ====================== -->
+<section class="py-5 text-center mt-5" >
+    <div class="container">
+
+        <h2 class="text-center fw-bold mb-4" style="color: #1b263b;" >Construyendo ideas que se vuelven realidad</h2>
+
+        <p class="lead mt-3">
+            Si quieres crear un proyecto, aprender desarrollo o descubrir
+            cómo la tecnología puede amplificar tu trabajo, en C&R Labs te guiamos paso a paso.
+        </p>
+
+        <a href="#" class="btn btn-primary btn-lg mt-3" style="background-color:#345b8c; border:none;">
+            Explorar más
+        </a>
+
+    </div>
+</section>
+
+
+{% endblock %}

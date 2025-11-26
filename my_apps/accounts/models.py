@@ -22,7 +22,7 @@ class Profile(models.Model):
     
 
     def __str__(self):
-        return f'Perfil de {self.user.username}, Cargo: {self.cargo}'
+        return f'Perfil de {self.usuario.username}, Cargo: {self.cargo}'
     
     class Meta:
         verbose_name = 'Perfil'

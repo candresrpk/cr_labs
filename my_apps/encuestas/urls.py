@@ -5,5 +5,7 @@ app_name = 'encuestas'
 
 
 urlpatterns = [
-    path('', views.home, name='dashboard'),
+    path('', views.encuestasListView, name='list'),
+    path('crear/', views.crearEncuestaView, name='crear'),
+    path('distribucion/crear/', views.crearDistribucionView, name='crear_distribucion'),
 ]

@@ -1,0 +1,107 @@
+{% extends '../base_dashboard.html' %}
+
+{% block title %} {{title}} {% endblock %}
+{% block active_encuestas %}active{% endblock %}
+{% block page_title %}Nueva Encuesta{% endblock %}
+
+{% block content %}
+
+<div class="card p-4 shadow-sm rounded-4">
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- TITULO -->
+        <div class="mb-3">
+            <label class="fw-semibold">{{ form.titulo.label }}</label>
+            {{ form.titulo }}
+            {% if form.titulo.errors %}
+                <div class="text-danger small">{{ form.titulo.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="mb-3">
+            <label class="fw-semibold">{{ form.descripcion.label }}</label>
+            {{ form.descripcion }}
+            {% if form.descripcion.errors %}
+                <div class="text-danger small">{{ form.descripcion.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <!-- DISTRIBUCIÓN -->
+        <div class="mb-3">
+
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-semibold">{{ form.distribucion.label }}</label>
+
+                <button type="button" class="btn btn-outline-primary btn-sm rounded-3"
+                    data-bs-toggle="modal" data-bs-target="#modalDistribucion">
+                    ➕ Crear distribución
+                </button>
+            </div>
+
+            {{ form.distribucion }}
+
+            {% if form.distribucion.field.queryset.count == 0 %}
+                <div class="alert alert-warning mt-3 rounded-3">
+                    No existen distribuciones aún —  
+                    <strong class="text-primary" role="button" 
+                            data-bs-toggle="modal" data-bs-target="#modalDistribucion">
+                        Crear una ahora
+                    </strong>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- BOTONES -->
+        <div class="d-flex justify-content-end gap-2">
+
+            <a href="{% url 'encuestas:list' %}" class="btn btn-outline-secondary rounded-4 px-4">
+                ✖ Cancelar
+            </a>
+
+            <button class="btn btn-primary rounded-4 px-4">
+                💾 Guardar Encuesta
+            </button>
+        </div>
+
+    </form>
+</div>
+
+
+
+<!-- ========================================================
+                    MODAL CREAR DISTRIBUCIÓN
+======================================================== -->
+<div class="modal fade" id="modalDistribucion">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-4 shadow-sm">
+
+            <form method="POST" action="{% url 'encuestas:crear_distribucion' %}">
+                {% csrf_token %}
+
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Crear Distribución</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    {{ form_distribucion.as_p }}
+                </div>
+
+                <div class="modal-footer border-0 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary rounded-4 px-3" data-bs-dismiss="modal">
+                        ✖ Cancelar
+                    </button>
+
+                    <button type="submit" class="btn btn-primary rounded-4 px-4">
+                        💾 Guardar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends '../base_dashboard.html' %}
+
+{% block title %} {{title}} {% endblock %}
+{% block active_encuestas %}active{% endblock %}
+{% block page_title %}Lista de Encuestas{% endblock %}
+
+{% block content %}
+
+<style>
+    /* 🎨 Estilos existentes (no se tocaron tus colores ni lógica visual) */
+    .fila-activa { background:#e8f0ff!important }
+    .fila-inactiva { background:#f6f6f6!important }
+
+    .badge-cr { padding:6px 10px; font-size:.8rem; border-radius:12px; font-weight:600 }
+    .badge-activa { background:#2c6edb; color:#fff }
+    .badge-inactiva { background:#7f8c8d; color:#fff }
+
+    .btn-cr {
+        background:#2c6edb; border-radius:20px; border:none;color:white;
+        padding:6px 14px; transition:.2s; box-shadow:0 3px 6px rgba(0,0,0,.15);
+    }
+    .btn-cr:hover { background:#1e5ab2; transform:translateY(-2px) }
+
+    .btn-flotante {
+        position:fixed; bottom:30px; right:30px;
+        background:#2c6edb; color:white; padding:14px 22px;
+        border-radius:50px; font-size:16px; font-weight:600;
+        box-shadow:0 6px 12px rgba(0,0,0,.25); transition:.25s;
+        z-index:1000;
+    }
+    .btn-flotante:hover { transform:scale(1.05) }
+
+    /* 📱 Responsivo verdadero */
+    @media(max-width:768px){
+        table thead{ display:none; }
+        table tr{
+            display:block; margin-bottom:14px; border-radius:10px;
+            overflow:hidden; border:1px solid rgba(0,0,0,.07);
+        }
+        table td{
+            display:flex; justify-content:space-between; padding:10px 14px;
+            font-size:.9rem; border-bottom:1px solid #ddd;
+        }
+        table td:last-child{ border-bottom:none; }
+
+        table td:before{
+            content:attr(data-label);
+            font-weight:bold; color:#2c6edb; margin-right:10px;
+        }
+    }
+
+    @media(max-width:480px){
+        .btn-flotante{ bottom:18px; right:18px; padding:10px 16px; font-size:14px; }
+        .btn-cr{ font-size:.78rem; padding:5px 10px; }
+        .badge-cr{ font-size:.65rem; padding:4px 7px; }
+    }
+</style>
+
+
+<div class="card p-4 shadow-sm rounded-4" style="border-left:6px solid #2c6edb;">
+    <table class="table table-hover align-middle">
+        <thead style="background:#eef5ff;">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th class="text-end">Acción</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for encuesta in encuestas %}
+            <tr class="{% if encuesta.activa %}fila-activa{% else %}fila-inactiva{% endif %}">
+                <td data-label="ID">{{ encuesta.id }}</td>
+                <td data-label="Título"><strong>{{ encuesta.titulo }}</strong></td>
+                <td data-label="Descripción">{{ encuesta.descripcion }}</td>
+                <td data-label="Fecha">{{ encuesta.fecha_creacion|date:'d/m/Y' }}</td>
+                <td data-label="Estado">
+                    {% if encuesta.activa %}
+                        <span class="badge-cr badge-activa">Activa</span>
+                    {% else %}
+                        <span class="badge-cr badge-inactiva">Inactiva</span>
+                    {% endif %}
+                </td>
+                <td data-label="Acción" class="text-end">
+                    <a href="#" class="btn-cr">Ver</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center py-3 text-muted">No hay encuestas disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Botón flotante -->
+<a href="{% url 'encuestas:crear' %}" class="btn-flotante">+ Nueva</a>
+
+{% endblock %}

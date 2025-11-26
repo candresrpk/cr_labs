@@ -67,7 +67,7 @@ class PermisosEncuesta(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Permiso de {self.usuario.username} para {self.encuesta.titulo} "
+        return f"Permiso de {self.usuario} para {self.encuesta.titulo} "
 
 
 class Pregunta(models.Model):

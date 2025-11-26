@@ -21,8 +21,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 MY_APPS = [
+    'my_apps.web.apps.WebConfig',
+    'my_apps.blog.apps.BlogConfig',
     'my_apps.accounts.apps.AccountsConfig',
     'my_apps.encuestas.apps.EncuestasConfig',
+    'my_apps.portfolios.apps.PortfoliosConfig',
 ]
 
 THIRD_PARTY_APPS = [
