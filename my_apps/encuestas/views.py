@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Encuesta, PermisosEncuesta
+from django.db.models import F
+from .models import Encuesta, PermisosEncuesta, DatosDistribucion
+from django.db.models import Sum
+from django.db.models.functions import Round
 from .forms import EncuestaForm, DistribucionForm
-from my_apps.accounts.models import Profile
+from my_apps.accounts.models import Profile, InvitacionEncuestador
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
@@ -32,16 +35,17 @@ def encuestasListView(request):
 # ================== CREAR ENCUESTA ==========================
 @login_required
 def crearEncuestaView(request):
-    form = EncuestaForm()
-    form_distribucion = DistribucionForm()  # ← NECESARIO PARA QUE APAREZCA EN EL MODAL
+    cliente = request.user.profile.cliente  # obtenemos el cliente dueño
+
     if request.method == 'POST':
-        form = EncuestaForm(request.POST)
+        form = EncuestaForm(request.POST, cliente=cliente)  # ← SE PASA CLIENTE
         form_distribucion = DistribucionForm(request.POST)
+        
         if form.is_valid():
             with transaction.atomic():
                 encuesta = form.save()
 
-                # Crear permiso para el usuario creador (opcional pero recomendado)
+                # Crear permiso para el usuario creador
                 PermisosEncuesta.objects.create(
                     encuesta=encuesta,
                     usuario=request.user.profile
@@ -50,26 +54,93 @@ def crearEncuestaView(request):
             messages.success(request, "Encuesta creada exitosamente.")
             return redirect('encuestas:list')
 
-    context = {
+    else:
+        form = EncuestaForm(cliente=cliente)  # ← IMPORTANTE EN GET TAMBIÉN
+        form_distribucion = DistribucionForm()
+
+    return render(request, 'encuestas/crear.html', {
         'title': 'Crear Encuesta',
         'form_distribucion': form_distribucion,
         'form': form,
-    }
-    return render(request, 'encuestas/crear.html', context)
+    })
 
 
 # ================== CREAR DISTRIBUCIÓN ======================
 @login_required
 def crearDistribucionView(request):
-    dist_form = DistribucionForm()
+    # Obtener cliente desde el perfil del usuario
+    profile = request.user.profile
+    cliente = profile.cliente
 
     if request.method == "POST":
         dist_form = DistribucionForm(request.POST)
+
         if dist_form.is_valid():
-            dist_form.save()
-            messages.success(request, "Distribución registrada correctamente.")
+            nueva_dist = dist_form.save(commit=False)
+            nueva_dist.cliente = cliente
+            nueva_dist.save()
 
-            # Si venimos desde el modal, nos devuelve a crear encuesta
-            return redirect('encuestas:crear')
+            messages.success(request, "Distribución creada correctamente.")
+            return redirect('encuestas:crear')  # vuelve al modal original
 
-    return render(request, 'encuestas/crear_distribucion.html', {'dist_form': dist_form})
+        else:
+            # Si el form falla, recargamos la vista principal con errores visibles en el modal
+            encuesta_form = EncuestaForm(cliente=cliente)
+
+            return render(request, "encuestas/crear.html", {
+                'form': encuesta_form,
+                'form_distribucion': dist_form,  # ← mantiene errores
+                'open_modal_distribucion': True  # ← para abrir el modal
+            })
+
+    return redirect('encuestas:crear')
+
+@login_required
+def encuestaDetailView(request, encuesta_id):
+
+    try:
+        profile = Profile.objects.get(usuario=request.user)
+
+        # Verifica que el usuario tenga permiso sobre la encuesta
+        encuesta_usuario = PermisosEncuesta.objects.get(
+            usuario_id=profile.id,
+            encuesta_id=encuesta_id
+        ).encuesta_id
+
+        encuesta = Encuesta.objects.get(id=encuesta_usuario)
+
+        # 📊 PROGRESO DE USUARIOS
+        progreso = (
+            DatosDistribucion.objects
+                .filter(distribucion=encuesta.distribucion)
+                .values("encuestador__username")  # Agrupa por encuestador
+                .annotate(
+                    nombre_encuestador = F("encuestador__username"),
+                    total = Sum("cuota_total"),         # Campo real
+                    completas = Sum("completadas"),     # Campo real con alias nuevo
+                    porcentaje = Round(
+                        Sum("completadas") * 100.0 / Sum("cuota_total"), 2
+                    )
+                )
+        )
+
+        # 🔗 Invitaciones activas del cliente al que pertenece el usuario
+        invitaciones = InvitacionEncuestador.objects.filter(
+            cliente=profile.cliente
+        )
+
+    except PermisosEncuesta.DoesNotExist:
+        messages.error(request, "No tienes permiso para ver esta encuesta.")
+        return redirect('encuestas:list')
+
+    except Encuesta.DoesNotExist:
+        messages.error(request, "La encuesta no existe.")
+        return redirect('encuestas:list')
+
+
+    return render(request, 'encuestas/detalle.html', {
+        "title": f"Detalle de Encuesta: {encuesta.titulo}",
+        "encuesta": encuesta,
+        "progreso": progreso,
+        "invitaciones": invitaciones
+    })

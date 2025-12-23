@@ -1,0 +1,93 @@
+{% extends '../base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock  %}
+
+{% block content %}
+<div class="container py-5">
+  <!-- HERO -->
+  <div class="row align-items-center mb-5">
+    <div class="col-lg-6 text-center text-lg-start">
+      <h1 class="display-4 fw-bold mb-3">
+        Organiza tu día con <span class="text-success">Taskedo</span>
+      </h1>
+      <p class="lead text-muted mb-4">
+        La app de tareas simple, rápida y poderosa para enfocarte en lo que realmente importa.
+      </p>
+      <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
+        <a href="#" class="btn btn-success btn-lg rounded-pill shadow">
+          Empezar gratis
+        </a>
+        <a href="#" class="btn btn-outline-success btn-lg rounded-pill">
+          Ver demo
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-6 text-center mt-4 mt-lg-0">
+      <div class="bg-white rounded-4 shadow p-4">
+        <img src="https://via.placeholder.com/500x300" class="img-fluid rounded-3" alt="Taskedo preview">
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="row text-center mb-5">
+    <div class="col-12 mb-4">
+      <h2 class="fw-bold">¿Por qué usar Taskedo?</h2>
+      <p class="text-muted">Todo lo que necesitas para ser productivo sin complicaciones</p>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <div class="mb-3 text-success fs-1">📝</div>
+          <h5 class="fw-semibold">Tareas claras</h5>
+          <p class="text-muted">
+            Crea, edita y completa tareas en segundos con una interfaz limpia.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <div class="mb-3 text-success fs-1">⏰</div>
+          <h5 class="fw-semibold">Prioridades</h5>
+          <p class="text-muted">
+            Organiza tu día por importancia y deja de procrastinar.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <div class="mb-3 text-success fs-1">📊</div>
+          <h5 class="fw-semibold">Progreso visible</h5>
+          <p class="text-muted">
+            Visualiza tu avance diario y mantén la motivación.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="row">
+    <div class="col-12">
+      <div class="bg-success text-white text-center rounded-4 shadow p-5">
+        <h2 class="fw-bold mb-3">Empieza a organizar tu vida hoy</h2>
+        <p class="mb-4 opacity-75">
+          Taskedo te ayuda a tomar control de tu tiempo desde el primer día.
+        </p>
+        <a href="{% url "accounts:register" %}" class="btn btn-light btn-lg rounded-pill fw-semibold">
+          Crear cuenta gratis
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

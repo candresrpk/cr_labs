@@ -1,0 +1,210 @@
+{% extends '../base_dashboard.html' %}
+
+{% block title %} {{title}} {% endblock %}
+{% block active_encuestas %}active{% endblock %}
+{% block page_title %}Detalle de Encuesta{% endblock %}
+
+{% block content %}
+
+<style>
+/*  🔷 Estilo general dashboard  */
+.card-cr {
+    border-radius: 14px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+    border-left: 6px solid #2c6edb;
+}
+
+/*  Tablas */
+.table-cr th {
+    background:#e9f1ff;
+    font-size: 14px;
+    font-weight: 600;
+}
+.table-cr td {
+    font-size: 14px;
+}
+
+/* Badges */
+.badge-distribucion {
+    background:#2c6edb;
+    padding:6px 12px;
+    border-radius:14px;
+    font-weight:600;
+    color:white;
+}
+.btn-cr {
+    background:#2c6edb;
+    color:white;
+    padding:6px 14px;
+    border-radius:22px;
+    transition:.2s;
+}
+.btn-cr:hover { background:#1d57b0; transform:scale(1.03); }
+
+</style>
+
+
+<div class="container">
+
+    <!-- 🔹 ENCABEZADO -->
+    <div class="card p-4 shadow-sm rounded-4 border-0 mb-4" style="border-left:6px solid #1e51b3;">
+
+        <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
+            <div>
+                <h6 class="fw-bold text-primary mb-1 " style="color: #1e51b3 !important;">
+                    🏢 Cliente:
+                    <span class="text-dark">{{ request.user.profile.cliente.nombre }}</span>
+                </h6>
+
+                <h2 class="fw-bold mb-0 text-dark">{{ encuesta.titulo }}</h2>
+                <p class="text-muted mt-1">{{ encuesta.descripcion }}</p>
+            </div>
+
+            <a href="#" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold" style="border-width:2px;">
+                📊 Ir al Dashboard
+            </a>
+        </div>
+
+        <!-- 🔹 Distribución reducida y elegante -->
+        <div class="d-flex align-items-center justify-content-between mt-1">
+            <span class="px-3 py-1 rounded-pill text-white fw-semibold"
+                style="background:#1e51b3; font-size:14px; letter-spacing:0.2px;">
+                📍 Distribución: <span class="fw-bold">{{ encuesta.distribucion.nombre }}</span>
+            </span>
+
+            <a href="#" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold"
+                style="background:#1e51b3; border:none;">
+                ➕ Agregar Cuotas
+            </a>
+        </div>
+
+    </div>
+
+
+
+    <!-- 🔹 Usuarios asignados -->
+    <div class="card card-cr p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Encuestadores asignados</h4>
+
+            <a href="{% url 'accounts:generar_invitacion' %}" class="btn btn-cr">
+                🔗 Invitar Usuario
+            </a>
+        </div>
+
+        <table class="table table-hover table-cr">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cuotas asignadas</th>
+                    <th>Completadas</th>
+                    <th>Avance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in progreso %}
+                <tr>
+                    <td>{{ item.encuestador }}</td>
+                    <td>{{ item.total }}</td>
+                    <td>{{ item.completadas }}</td>
+                    <td><strong>{{ item.porcentaje }}%</strong></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted py-3">
+                        Aún no hay encuestadores asignados.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- 🔹 Invitaciones generadas -->
+    <div class="card card-cr p-4 mb-4">
+        <h4 class="mb-3">Invitaciones activas</h4>
+
+        <table class="table table-cr">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Usos</th>
+                    <th>Expira</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in invitaciones %}
+                <tr>
+                    <td>{{ i.token }}</td>
+                    <td>{{ i.usado }}/{{ i.max_uso }}</td>
+                    <td>{{ i.expiracion|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <input class="form-control" 
+                               readonly
+                               value="{{ request.build_absolute_uri }}invitaciones/{{ i.token }}/">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="row g-4">
+
+    <!-- 📈 PROGRESO POR ENCUESTADOR -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm p-4 rounded-4">
+                <h4 class="fw-bold mb-2">Progreso por Encuestador</h4>
+                <canvas id="chartProgreso"></canvas>
+            </div>
+        </div>
+
+        <!-- 📋 PREGUNTAS DE LA ENCUESTA -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm p-4 rounded-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold m-0">Preguntas registradas</h4>
+                    <a href="#" class="btn btn-primary rounded-pill px-3">➕ Agregar Pregunta</a>
+                </div>
+
+                {% if encuesta.preguntas.all %}
+                    <ul class="list-group">
+                        {% for p in encuesta.preguntas.all %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ p.texto }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Aún no hay preguntas registradas.</p>
+                {% endif %}
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById("chartProgreso");
+new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: [{% for item in progreso %}"{{ item.encuestador }}",{% endfor %}],
+        datasets: [{
+            label: "Cuotas completadas",
+            data: [{% for item in progreso %}{{ item.completadas }},{% endfor %}],
+        }]
+    },
+});
+</script>
+
+{% endblock %}

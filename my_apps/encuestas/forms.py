@@ -29,6 +29,24 @@ class EncuestaForm(forms.ModelForm):
                 'required': 'Por favor, ingrese la descripción de la encuesta.',
             },
         }
+
+    def __init__(self, *args, **kwargs):
+        cliente = kwargs.pop('cliente', None)  # <<— lo recibimos desde la vista
+        super().__init__(*args, **kwargs)
+
+        if cliente:
+            self.fields['distribucion'].queryset = Distribucion.objects.filter(cliente=cliente)
+        else:
+            self.fields['distribucion'].queryset = Distribucion.objects.none()  # seguridad
+        
+
+    def get_from(self):
+        form = super().get_form()
+        form.fields['distribucion'].queryset = Distribucion.objects.filter(
+            cliente = self.request.user.profile.cliente.nombre
+        )
+        
+        return form
         
     def clean_titulo(self):
         titulo = self.cleaned_data.get('titulo')

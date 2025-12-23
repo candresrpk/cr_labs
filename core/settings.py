@@ -26,6 +26,7 @@ MY_APPS = [
     'my_apps.accounts.apps.AccountsConfig',
     'my_apps.encuestas.apps.EncuestasConfig',
     'my_apps.portfolios.apps.PortfoliosConfig',
+    'my_apps.taskedo.apps.TaskedoConfig',
 ]
 
 THIRD_PARTY_APPS = [

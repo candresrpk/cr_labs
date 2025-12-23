@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-from ..accounts.models import Profile
+from ..accounts.models import Profile, Cliente
 
 class Distribucion(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
+    cliente = models.ForeignKey(Cliente, related_name='distribuciones', on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

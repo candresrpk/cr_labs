@@ -85,7 +85,7 @@
                     {% endif %}
                 </td>
                 <td data-label="Acción" class="text-end">
-                    <a href="#" class="btn-cr">Ver</a>
+                    <a href="{% url 'encuestas:detalle' encuesta.id %}" class="btn-cr">Ver</a>
                 </td>
             </tr>
             {% empty %}
