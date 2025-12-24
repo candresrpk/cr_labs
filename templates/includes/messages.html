@@ -1,0 +1,18 @@
+<!-- ========= SISTEMA GLOBAL DE MENSAJES ========= -->
+{% if messages %}
+    <div class="container px-2 mb-3">
+        {% for msg in messages %}
+            <div class="alert alert-{{ msg.tags }} alert-dismissible fade show rounded-4 shadow-sm" role="alert">
+                <strong>
+                    {% if msg.tags == "success" %}✔ Éxito:
+                    {% elif msg.tags == "warning" %}⚠ Aviso:
+                    {% elif msg.tags == "error" %}❌ Error:
+                    {% else %}ℹ Info:{% endif %}
+                </strong> {{ msg }}
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<!-- ============================================= -->
