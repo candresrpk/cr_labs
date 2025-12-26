@@ -1,0 +1,50 @@
+<div class="d-flex flex-column h-100">
+
+  <!-- USER -->
+  <div class="p-4 text-center border-bottom">
+    <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-2"
+         style="width:48px;height:48px;">
+      {{ user.username|slice:":1"|upper }}
+    </div>
+    <h6 class="mb-0 fw-semibold">{{ user.username }}</h6>
+    <small class="text-muted">Taskedo</small>
+  </div>
+
+  <!-- NAV -->
+  <nav class="flex-grow-1 p-3">
+    {% with current_url=request.resolver_match.url_name %}
+        <ul class="nav nav-pills flex-column gap-2">
+
+        <li class="nav-item">
+            <a href="{% url 'taskedo:list' %}"
+            class="nav-link {% if current_url == 'taskedo:list' %}active{% endif %}">
+            📝 Tareas
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#"
+            class="nav-link {% if current_url == 'taskedo:progress' %}active{% endif %}">
+            📊 Progreso
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#"
+            class="nav-link {% if current_url == 'taskedo:admin' %}active{% endif %}">
+            ⚙️ Administrar
+            </a>
+        </li>
+
+        </ul>
+    {% endwith %}
+  </nav>
+
+  <!-- LOGOUT -->
+  <div class="p-3 border-top">
+    <a href="#" class="btn btn-outline-success btn-sm rounded-pill w-100">
+      Cerrar sesión
+    </a>
+  </div>
+
+</div>

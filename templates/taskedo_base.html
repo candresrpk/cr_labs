@@ -35,49 +35,39 @@
 <div class="container-fluid">
   <div class="row">
 
-    <!-- SIDEBAR -->
-    <aside class="col-12 col-md-3 col-lg-2 sidebar border-end p-0">
-      <div class="d-flex flex-column h-100">
 
-        <!-- USER -->
-        <div class="p-4 text-center border-bottom">
-          <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-2"
-               style="width:48px;height:48px;">
-            {{ user.username|slice:":1"|upper }}
-          </div>
-          <h6 class="mb-0 fw-semibold">{{ user.username }}</h6>
-          <small class="text-muted">Taskedo</small>
-        </div>
-
-        <!-- NAV -->
-        <nav class="flex-grow-1 p-3">
-          <ul class="nav nav-pills flex-column gap-2">
-            <li class="nav-item">
-              <a href="#" class="nav-link {% block nav_tasks %}{% endblock %}">
-                📝 Tareas
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link {% block nav_progress %}{% endblock %}">
-                📊 Progreso
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link {% block nav_admin %}{% endblock %}">
-                ⚙️ Administrar
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <!-- LOGOUT -->
-        <div class="p-3 border-top">
-          <a href="#" class="btn btn-outline-success btn-sm rounded-pill w-100">
-            Cerrar sesión
-          </a>
-        </div>
+    <!-- MOBILE NAVBAR -->
+    <nav class="navbar navbar-light bg-white border-bottom d-md-none">
+      <div class="container-fluid">
+        <button class="btn btn-outline-success rounded-pill"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#mobileSidebar">
+          ☰ Menú
+        </button>
+        <span class="fw-semibold">Taskedo</span>
       </div>
+    </nav>
+
+    <!-- SIDEBAR DESKTOP -->
+    <aside class="d-none d-md-block col-md-3 col-lg-2 sidebar border-end p-0">
+      {% include "includes/sidebar.html" %}
     </aside>
+
+    <!-- SIDEBAR MOBILE (OFFCANVAS) -->
+    <div class="offcanvas offcanvas-start d-md-none"
+        tabindex="-1"
+        id="mobileSidebar">
+
+      <div class="offcanvas-header border-bottom">
+        <h6 class="mb-0">Menú</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+
+      <div class="offcanvas-body p-0">
+        {% include "includes/sidebar.html" %}
+      </div>
+    </div>
+
 
     <!-- MAIN CONTENT -->
     <main class="col-12 col-md-9 col-lg-10 p-4">

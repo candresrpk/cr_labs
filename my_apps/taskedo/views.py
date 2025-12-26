@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView
-# from django.contrib.auth.decorators import login_required
-# from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from my_apps.taskedo.forms import TaskForm
 from my_apps.taskedo.models import Task
 from django.contrib import messages
@@ -24,7 +24,7 @@ class ListTasksView(ListView):
     template_name = 'taskedo/dashboard/list.html'
     context_object_name = 'tasks'
     
-    # @method_decorator(login_required)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
@@ -53,7 +53,7 @@ class CreateTaskView(CreateView):
                 messages.error(self.request, error)
         return self.render_to_response(self.get_context_data(form=form))
 
-    # @method_decorator(login_required)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
