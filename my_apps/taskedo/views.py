@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from my_apps.taskedo.forms import TaskForm
@@ -60,4 +60,34 @@ class CreateTaskView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Taskedo - Crear nueva tarea'
+        return context
+    
+    
+    
+class DeleteTaskView(DeleteView):
+    model = Task
+    template_name = 'taskedo/dashboard/delete.html'
+    success_url = reverse_lazy('taskedo:list')
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Taskedo - Eliminar tarea'
+        return context
+    
+    
+class DetailTaskView(DetailView):
+    model = Task
+    template_name = 'taskedo/dashboard/detail.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Taskedo - Detalle de la tarea'
         return context
