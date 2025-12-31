@@ -66,19 +66,12 @@ class CreateTaskView(CreateView):
     
 class DeleteTaskView(DeleteView):
     model = Task
-    template_name = 'taskedo/dashboard/delete.html'
     success_url = reverse_lazy('taskedo:list')
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Taskedo - Eliminar tarea'
-        return context
-    
-    
+     
 class DetailTaskView(DetailView):
     model = Task
     template_name = 'taskedo/dashboard/detail.html'
