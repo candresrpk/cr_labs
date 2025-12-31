@@ -50,10 +50,9 @@
               <a href="#" class="btn btn-outline-primary btn-sm rounded-pill me-2">
                 Editar
               </a>
-              <a href="#"
-                 class="btn btn-outline-danger btn-sm rounded-pill"
-                 onclick="return confirm('¿Seguro que deseas eliminar esta tarea?');">
-                Eliminar
+              <a href="{% url 'taskedo:delete' task.id %}"
+                class="btn btn-sm btn-outline-danger">
+                🗑
               </a>
             </td>
           </tr>
